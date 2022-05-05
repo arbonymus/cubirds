@@ -18,16 +18,17 @@ public class Jugador {
 
     /*
     * Esta clase representa la zona de juego de un jugador. Tendrá las siguientes funcionalidades
-    * - Un constructor para crear la zona de juego
-    * - añadir cartas
-    * - Número de cartas
-    * - Número de especies distintas
-    * - mostrar zona de juego
+    * - Un constructor para crear la zona de juego(hecho)
+    * - añadir cartas(hecho)
+    * - Número de cartas (hecho)
+    * - Número de especies distintas(hecho)
+    * - mostrar zona de juego (hecho)
      */
     private class ZonaJuego {
-        private Pila<Carta>[] zonajuego;
-        private int numCartasenZonadeJuego;
-        private int numEspeciesDistintas;
+        private final Pila<Carta>[] zonaJuego;
+        private final int numCartasenZonadeJuego;
+        private final int numEspeciesDistintas;
+        private final static int TAM_ZONA_JUEGO = 8;
 
         public int getNumCartasenZonadeJuego() {
             return numCartasenZonadeJuego;
@@ -36,12 +37,55 @@ public class Jugador {
         public int getNumEspeciesDistintas() {
             return numEspeciesDistintas;
         }
-    
+        public ZonaJuego(Mano mano){
+            zonaJuego = new EnlazadaPila[TAM_ZONA_JUEGO];
+            this.numCartasenZonadeJuego=0;
+            this.numEspeciesDistintas=0;
+        }
+        public void anhadirCarta(Carta carta,Mano mano){
+            mano.sacarCartaMano(carta);
+            switch (carta.getNombre()) {
+                    case "Curruca de caña":
+                        zonaJuego[0].push(carta);
+                        break;
+                    case "Flamenco":
+                        zonaJuego[1].push(carta);
+                        break;
+                    case "Petirrojo":
+                        zonaJuego[2].push(carta);
+                        break;
+                    case "Tucan":
+                        zonaJuego[3].push(carta);
+                        break;
+                    case "Pato":
+                        zonaJuego[4].push(carta);
+                        break;
+                    case "Urraca":
+                        zonaJuego[5].push(carta);
+                        break;
+                    case "Lechuza":
+                        zonaJuego[6].push(carta);
+                        break;
+                    case "Luacamayo":
+                        zonaJuego[7].push(carta);
+                        break;
+            }
+        }
+        public void mostrarZonadeJuego(){
+            for (int i = 0; i < TAM_ZONA_JUEGO; i++) {
+                for (int j = 0; j < zonaJuego[i].tamaño(); j++) {
+                    if(zonaJuego[i].top()!=null){
+                        System.out.println(zonaJuego[i].top()+" ");
+                    } 
+                }
+            }
+        }
+        
          
     }
     private final class Mano {
 
-        private Pila<Carta>[] mano;
+        private final Pila<Carta>[] mano;
         private int numCartasenMano;
         private final static int TAM_MANO_INICIAL = 8;
 
@@ -92,6 +136,7 @@ public class Jugador {
 
 
             }
+          
 
         }
      }
@@ -198,7 +243,9 @@ public class Jugador {
         public void mostrarMano(){
             for (int i = 0; i < TAM_MANO_INICIAL; i++) {
                 for (int j = 0; j < mano[i].tamaño(); j++) {
-                    System.out.println(mano[i].top());
+                    if(mano[i].top()!=null){
+                        System.out.println(mano[i].top()+" ");
+                    } 
                 }
             }
         }
