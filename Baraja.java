@@ -9,91 +9,109 @@
 
 package es.uvigo.esei.cubirds.core;
 
-import cola.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 
-public final class Baraja {
-    Cola <Carta> bCartas;
+public class Baraja {
+
+    private Stack<Carta> baraja;
+    private int numCartas;
+    // Variables constantes de la cantidad de cartas de una especie determinada 
+    private final int CURRUCA_DE_CANIA = 20;
+    private final int FLAMENCO = 7;
+    private final int PETIRROJO = 20;
+    private final int TUCAN = 10;
+    private final int PATO = 13;
+    private final int URRACA = 17;
+    private final int LECHUZA = 8;
+    private final int GUACAMAYO = 13;
+    /**
+     * Crea una baraja nueva
+     */
     public Baraja() {
-        bCartas = new EnlazadaCola<>();
-        insertarCartas();
-    }
+        numCartas = 0;
+        baraja = new Stack<Carta>();
 
-    public Cola<Carta> getbCartas() {
-        return bCartas;
+        for (int i = 1; i <= CURRUCA_DE_CANIA; i++) {
+            baraja.add(new Carta("Curruca de caña",6,9));
+            numCartas++;
+        }
+        for (int i = 1; i <= FLAMENCO; i++) {
+            baraja.add(new Carta("Flamenco",2,3));
+            numCartas++;
+        }
+        for (int i = 1; i <= PETIRROJO; i++) {
+            baraja.add(new Carta("Petirrojo",6,9));
+            numCartas++;
+        }
+        for (int i = 1; i <= TUCAN; i++) {
+            baraja.add(new Carta("Tucan",3,4));
+            numCartas++;
+        }
+        for (int i = 1; i <= PATO; i++) {
+            baraja.add(new Carta("Pato",4,6));
+            numCartas++;
+        }
+        for (int i = 1; i <= URRACA; i++) {
+            baraja.add(new Carta("Urraca",5,7));
+            numCartas++;
+        }
+        for (int i = 1; i <= LECHUZA; i++) {
+            baraja.add(new Carta("Lechuza",3,4));
+            numCartas++;
+        }
+        for (int i = 1; i <= GUACAMAYO; i++) {
+            baraja.add(new Carta("Guacamayo",4,6));
+            numCartas++;
+        }
+    }
+   
+    /**
+     * Este método coge las cartas de la baraja y las desordena
+     * @return 
+     */
+    
+    //Modifica: this
+    //Produce: usando la librería math y un array, se van insertando las cartas de la baraja en un array de cartas y al finalizar se mete todo de nuevo en la baraja
+    
+    //Produce: devuelve el número de cartas totales de la baraja.
+    public int getNumCartas() {
+        return numCartas;
     }
     
-    public void insertarCartas(){
-        
-        Carta carta1 = new Carta("Curruca de caña",6,9,20);
-        Carta carta2 = new Carta("Flamenco",2,3,7);
-        Carta carta3 = new Carta ("Petirrojo",6,9,20);
-        Carta carta4 = new Carta ("Tucan",3,4,10);
-        Carta carta5 = new Carta ("Pato",4,6,13);
-        Carta carta6 = new Carta ("Urraca",5,7,17);
-        Carta carta7 = new Carta ("Lechuza",3,4,10);
-        Carta carta8 = new Carta("Luacamayo",4,6,13);
-        
-        for(int i = 0;i<carta1.getNumCartas();i++){
-            bCartas.insertar(carta1);
-        }
-        for(int i = 0;i<carta2.getNumCartas();i++){
-            bCartas.insertar(carta2);
-        }
-        for(int i = 0;i<carta3.getNumCartas();i++){
-            bCartas.insertar(carta3);
-        }
-        for(int i = 0;i<carta4.getNumCartas();i++){
-            bCartas.insertar(carta4);
-        }
-        for(int i = 0;i<carta5.getNumCartas();i++){
-            bCartas.insertar(carta5);
-        }
-        for(int i = 0;i<carta6.getNumCartas();i++){
-            bCartas.insertar(carta6);
-        }
-        for(int i = 0;i<carta6.getNumCartas();i++){
-            bCartas.insertar(carta6);
-        }
-        for(int i = 0;i<carta6.getNumCartas();i++){
-            bCartas.insertar(carta6);
-        }
-        for(int i = 0;i<carta7.getNumCartas();i++){
-            bCartas.insertar(carta7);
-        }
-        for(int i = 0;i<carta8.getNumCartas();i++){
-            bCartas.insertar(carta8);
-        }
-        barajar(bCartas);
-        
-        
-    }
     
-    public void barajar (Cola<Carta> baraja){
-        Carta[] bEj = new Carta[baraja.tamaño()-1];
-        int pos;
+    public void Barajar(){
+        Carta cartas[] = new Carta[getNumCartas()];//nuevo array auxiliar
+        int aleatorio;
         do{
-            pos = ((int)(Math.random()*(110)-1));
-            if(bEj[pos] == null){
-                bEj[pos]= baraja.primero();
-                baraja.suprimir();
+            aleatorio = (int) (Math.random() * getNumCartas());
+            if(cartas[aleatorio]==null){//si la nueva pos donde voy a meter la carta esta vacía meela, si no sigue barajando
+                cartas[aleatorio] = baraja.pop();
             }
-        }while (!(baraja.esVacio()));
-        for (int i = 0; i<109;i++){
-            baraja.insertar(bEj[i]);
+        }while(baraja.size() > 0);//hasta que la baraja original este vacía, baraja.
+        for(int i = 0;i<getNumCartas();i++){
+            baraja.push(cartas[i]);
         }
     }
-    
-    public int CartasenBaraja(){
-        return bCartas.tamaño();
+    /**
+     * Este método retira una carta de la baraja y la elimina
+     * @return Carta
+     */
+    //Modifica:this
+    //Produce: devuelve una carta de la baraja
+    public Carta darCarta() {
+        numCartas--;
+        return baraja.pop();
     }
+    //MODIFICA : INSERTA UNA CARTA EN LA BARAJA Y AUMENTA EL CONTADOR DE numCartas
     
-    public Carta darCarta(){
-        return this.bCartas.primero();
- 
-    }
     public void anhadirCarta(Carta carta){
-        this.bCartas.insertar(carta);
+        numCartas++;
+        baraja.add(carta);
     }
     
+
+
 }
