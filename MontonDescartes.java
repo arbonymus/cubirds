@@ -4,17 +4,21 @@
  * - añadir carta
  */
 package es.uvigo.esei.cubirds.core;
-import pila.*;
+import java.util.Stack;
+
 
 public class MontonDescartes {
-    private final Pila<Carta> montonDescartes;
+    private final Stack<Carta> montonDescartes;
   // private Stack <Carta> montonDescartes;
     
+    
+    //
     public MontonDescartes (){
-        montonDescartes = new EnlazadaPila<>();
+        montonDescartes = new Stack<>();
        // montonDescartes = new Stack<>();
     }
     
+    //añades una carta al  monton de descartes
     public void anhadirCarta(Carta c){
         montonDescartes.push(c);    
     }
